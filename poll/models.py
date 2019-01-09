@@ -14,6 +14,9 @@ class User(models.Model):
     def is_a_voter(self):
         return UserRole.objects.filter(user=self, role='voter').exists()
 
+    class Meta:
+        ordering = ('username',)
+
 
 class UserRole(models.Model):
     user = models.ForeignKey('User')
@@ -34,6 +37,8 @@ class Team(models.Model):
     conference = models.CharField(max_length=60)
     division = models.CharField(max_length=50)
     use_for_ballot = models.BooleanField()
+    short_name = models.CharField(max_length=60)
+    ordering = ['name']
 
     def __unicode__(self):
         return unicode(self.name)
